@@ -1,10 +1,12 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import styled from "styled-components";
-import { UserContext } from "../../providers/UserProvider";
+// import { UserContext } from "../../providers/UserProvider";
 import { SecondaryButton } from "../atoms/button/SecondaryButton";
 import { SearchInput } from "../molecules/SearchInput";
 import { UserCard } from "../organisms/user/UserCard";
 // import { useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userState } from "../../store/userState";
 
 const users = [...Array(10).keys()].map((val) => {
   return {
@@ -27,7 +29,9 @@ export const Users = () => {
   //グローバルステートにしたことで、関係ないコンポーネントまで再レンダリングされてしまう
   //例えばSearchInputとかは再レンダリングの必要が無いのでmemoをつける
   //context使用する場合はどのコンポーネントが再レンダリングされるかチェックする事が必要
-  const { userInfo, setUserInfo } = useContext(UserContext);
+  // const { userInfo, setUserInfo } = useContext(UserContext);
+  const [userInfo, setUserInfo] = useRecoilState(userState);
+
   const onClickSwitch = () => {
     setUserInfo({ isAdmin: !userInfo.isAdmin });
   };
